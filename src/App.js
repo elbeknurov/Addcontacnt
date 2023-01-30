@@ -71,7 +71,7 @@ function App() {
                   setPhone(e.target.value);
                 }}
                 value={phone}
-                type="Tel"
+                type="number"
                 placeholder="tel"
               />
             </div>
