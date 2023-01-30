@@ -1,13 +1,41 @@
+import { useState } from "react";
+import Dell from "./Dell.svg";
 import "./App.css";
 
 function App() {
-  const obj = [
+  const [name, setName] = useState("");
+  const [relation, setRelation] = useState("");
+  const [phone, setPhone] = useState("");
+  const [todo, setTodo] = useState([
     {
       id: 1,
       title: "Abdulloh",
-      text: "   +998903236806",
+      text: "Friend",
+      number: "   +998903236806",
     },
-  ];
+  ]);
+  const addContanct = (e) => {
+    e.preventDefault();
+
+    const newTodo = {
+      id: Math.random().toString(),
+      title: name,
+      text: relation,
+      number: phone,
+    };
+    setTodo([...todo, newTodo]);
+    setName("");
+    setRelation("");
+    setPhone("");
+  };
+  const deleteTodoHandler = (id) => {
+    const result = todo.filter((todo) => {
+      if (todo.id !== id) {
+        return todo;
+      }
+    });
+    setTodo(result);
+  };
   return (
     <div className="App container">
       <div className="wrapper">
@@ -15,26 +43,60 @@ function App() {
           <h2 className="nameItem">New contact add</h2>
           <form className="form">
             <div>
-              <input className="input" type="text" placeholder="username" />
+              <input
+                className="input"
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+                value={name}
+                type="text"
+                placeholder="username"
+              />
             </div>
             <div>
-              <input className="input" type="text" placeholder="relation" />
+              <input
+                className="input"
+                onChange={(e) => {
+                  setRelation(e.target.value);
+                }}
+                value={relation}
+                type="text"
+                placeholder="relation"
+              />
             </div>
             <div>
-              <input className="input" type="Tel" placeholder="tel" />
+              <input
+                className="input"
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                }}
+                value={phone}
+                type="Tel"
+                placeholder="tel"
+              />
             </div>
-            <button className="btn btn-primary ">Add Contact</button>
+            <button onClick={addContanct} className="btn btn-primary ">
+              Add Contact
+            </button>
           </form>
         </div>
         <div className="down">
           <div className="cards">
-            <div className="card">
-              <h4 className="">{obj.title}</h4>
-              <p className="text">friend</p>
-              <a href="tel:+998903236806" className="tel">
-                {obj.text}
-              </a>
-            </div>
+            {todo.map((item) => {
+              return (
+                <div className="card">
+                  <h4 className="">{item.title}</h4>
+                  <p className="text">{item.text}</p>
+                  <a href="tel:+998903236806" className="tel">
+                    {item.number}
+                  </a>
+                  <br />
+                  <a href="#" onClick={() => deleteTodoHandler(item.id)}>
+                    <img src={Dell} alt="" />
+                  </a>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
