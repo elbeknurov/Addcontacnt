@@ -17,6 +17,7 @@ a {
 }
 .top {
   text-align: center;
+  align-items: center;
 }
 .nameItem {
   margin-bottom: 50px;
